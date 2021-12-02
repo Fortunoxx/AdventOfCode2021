@@ -1,8 +1,7 @@
-sample = open("src/day01/sample.dat")
-input = open("src/day01/input.dat")
+day = "01"
 files = [ 
-    { "key": "sample", "file": sample },
-    { "key": "input", "file": input }
+    { "key": "input", "file": open(f"src/day{day}/input.dat") },
+    { "key": "sample", "file": open(f"src/day{day}/sample.dat") }
 ]
 
 for fileInfo in files:
