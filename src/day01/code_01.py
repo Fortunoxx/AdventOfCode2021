@@ -9,10 +9,10 @@ for fileInfo in files:
     last = None
 
     for line in fileInfo["file"]:
-        intLine = int(line)
-        if last is not None and last < intLine:
+        number = int(line)
+        if last is not None and last < number:
             counter += 1
-        last = intLine
+        last = number
 
     print(f"{fileInfo['key']}: {counter}")
     fileInfo["file"].close()
