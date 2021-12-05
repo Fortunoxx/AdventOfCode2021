@@ -17,8 +17,9 @@ def process(fileInfos):
                 counter += 1
             last = number
 
-        print(f"Part I: {fileInfo['key']}: {counter}")
         file.close()
+
+        print(f"Part I: {fileInfo['key']}: {counter}")
 
 
 def process2(fileInfos):
@@ -38,6 +39,8 @@ def process2(fileInfos):
                 if (len(array) < cnt):
                     array.append(number)
 
+        file.close()
+
         l = len(arrays) - 1
 
         # remove last 2 arrays - incomplete
@@ -56,7 +59,6 @@ def process2(fileInfos):
             last = number
 
         print(f"Part II: {fileInfo['key']}: {counter}")
-        file.close()
 
 
 process(files)

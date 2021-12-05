@@ -26,6 +26,7 @@ def process2(fileInfos):
             counter+=1
 
         file.close()
+        
         result = { "file": fileInfo['key'] }
         print(f"Part II: {result}")
 

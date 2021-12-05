@@ -21,6 +21,7 @@ def convert(fileInfo):
         arrays.append(arr)
 
     file.close()
+    
     return {"arrays": arrays, "lines": linecounter, "width": arraywidth}
 
 

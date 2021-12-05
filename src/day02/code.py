@@ -49,6 +49,7 @@ def process2(fileInfos):
                 aim -= num
 
         file.close()
+        
         result = {"file": fileInfo['key'], "horiz": horiz,
                   "depth": depth, "prod": horiz*depth}
         print(f"Part II: {result}")
