@@ -1,8 +1,9 @@
 day = "02"
-files = [ 
-    { "key": "input", "file": f"src/day{day}/input.dat" },
-    { "key": "sample", "file": f"src/day{day}/sample.dat" }
+files = [
+    {"key": "input", "file": f"src/day{day}/input.dat"},
+    {"key": "sample", "file": f"src/day{day}/sample.dat"}
 ]
+
 
 def process(fileInfos):
     for fileInfo in fileInfos:
@@ -23,8 +24,10 @@ def process(fileInfos):
 
         file.close()
 
-        result = { "file": fileInfo['key'], "horiz": horiz, "depth": depth, "prod": horiz*depth }
+        result = {"file": fileInfo['key'], "horiz": horiz,
+                  "depth": depth, "prod": horiz*depth}
         print(f"Part I: {result}")
+
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
@@ -46,8 +49,10 @@ def process2(fileInfos):
                 aim -= num
 
         file.close()
-        result = { "file": fileInfo['key'], "horiz": horiz, "depth": depth, "prod": horiz*depth }
+        result = {"file": fileInfo['key'], "horiz": horiz,
+                  "depth": depth, "prod": horiz*depth}
         print(f"Part II: {result}")
+
 
 process(files)
 process2(files)

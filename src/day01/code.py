@@ -1,8 +1,9 @@
 day = "01"
-files = [ 
-    { "key": "input", "file": f"src/day{day}/input.dat" },
-    { "key": "sample", "file": f"src/day{day}/sample.dat" }
+files = [
+    {"key": "input", "file": f"src/day{day}/input.dat"},
+    {"key": "sample", "file": f"src/day{day}/sample.dat"}
 ]
+
 
 def process(fileInfos):
     for fileInfo in fileInfos:
@@ -18,6 +19,7 @@ def process(fileInfos):
 
         print(f"Part I: {fileInfo['key']}: {counter}")
         file.close()
+
 
 def process2(fileInfos):
     cnt = 3
@@ -37,12 +39,12 @@ def process2(fileInfos):
                     array.append(number)
 
         l = len(arrays) - 1
-        
+
         # remove last 2 arrays - incomplete
         arrays.pop(l)
         arrays.pop(l - 1)
 
-        for a in arrays: 
+        for a in arrays:
             s = 0
             for i in a:
                 s += i
@@ -55,6 +57,7 @@ def process2(fileInfos):
 
         print(f"Part II: {fileInfo['key']}: {counter}")
         file.close()
+
 
 process(files)
 process2(files)

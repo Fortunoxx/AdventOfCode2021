@@ -1,8 +1,9 @@
 day = "03"
-files = [ 
-    { "key": "input", "file": f"src/day{day}/input.dat" },
-    { "key": "sample", "file": f"src/day{day}/sample.dat" }
+files = [
+    {"key": "input", "file": f"src/day{day}/input.dat"},
+    {"key": "sample", "file": f"src/day{day}/sample.dat"}
 ]
+
 
 def convert(fileInfo):
     arrays = []
@@ -20,7 +21,8 @@ def convert(fileInfo):
         arrays.append(arr)
 
     file.close()
-    return { "arrays": arrays, "lines": linecounter, "width": arraywidth }
+    return {"arrays": arrays, "lines": linecounter, "width": arraywidth}
+
 
 def process(fileInfos):
     for fileInfo in fileInfos:
@@ -43,15 +45,17 @@ def process(fileInfos):
             if sum > length / 2:
                 sum1 += "1"
                 sum2 += "0"
-            else: 
+            else:
                 sum1 += "0"
                 sum2 += "1"
             idx += 1
 
         gamma = int(sum1, 2)
         epsilon = int(sum2, 2)
-        result = { "file": fileInfo['key'], "gamma": gamma, "epsilon": epsilon, "result": gamma * epsilon }
+        result = {"file": fileInfo['key'], "gamma": gamma,
+                  "epsilon": epsilon, "result": gamma * epsilon}
         print(f"Part I: {result}")
+
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
@@ -59,11 +63,12 @@ def process2(fileInfos):
 
         file = open(fileInfo["file"])
         for line in file:
-            counter+=1
+            counter += 1
 
         file.close()
-        result = { "file": fileInfo['key'] }
+        result = {"file": fileInfo['key']}
         print(f"Part II: {result}")
+
 
 process(files)
 process2(files)
