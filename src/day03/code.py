@@ -21,7 +21,7 @@ def convert(fileInfo):
         arrays.append(arr)
 
     file.close()
-    
+
     return {"arrays": arrays, "lines": linecounter, "width": arraywidth}
 
 
@@ -58,16 +58,41 @@ def process(fileInfos):
         print(f"Part I: {result}")
 
 
+def filter(arrays, mostCommon=True):
+    currentArray = arrays["arrays"]
+    idx = 0
+
+    while idx < int(arrays["width"]) and len(currentArray) > 1:
+        numbers = []
+        for a in currentArray:
+            num = a[idx]
+            numbers.append(num)
+            
+        bitToFind = 0
+        if mostCommon and sum(numbers) >= len(currentArray) / 2:
+            bitToFind = 1
+        elif not mostCommon and sum(numbers) < len(currentArray) / 2:
+            bitToFind = 1
+
+        tempArray = []
+        for a in currentArray:
+            if a[idx] == bitToFind:
+                tempArray.append(a)
+
+        currentArray = tempArray
+        idx += 1
+    
+    binary = ''.join(list(map(lambda x: str(x), currentArray[0])))
+    return int(binary, 2)
+
+
 def process2(fileInfos):
     for fileInfo in fileInfos:
-        counter = 0
+        arrays = convert(fileInfo)
+        intOxy = filter(arrays)
+        intCo2 = filter(arrays, False)
 
-        file = open(fileInfo["file"])
-        for line in file:
-            counter += 1
-
-        file.close()
-        result = {"file": fileInfo['key']}
+        result = {"file": fileInfo['key'], "intOxy": intOxy, "intCo2": intCo2, "result": intOxy * intCo2 }
         print(f"Part II: {result}")
 
 
