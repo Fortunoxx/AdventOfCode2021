@@ -1,6 +1,6 @@
-day = "05"
+day = "xx"
 files = [ 
-    # { "key": "input", "file": f"src/day{day}/input.dat" },
+    { "key": "input", "file": f"src/day{day}/input.dat" },
     { "key": "sample", "file": f"src/day{day}/sample.dat" }
 ]
 
