@@ -1,4 +1,10 @@
+import sys
+sys.path.append('src/puzzle')
+import puzzle
+
 day = "04"
+puzzle.FetchForDay(day)
+
 files = [
     {"key": "input", "file": f"src/day{day}/input.dat"},
     {"key": "sample", "file": f"src/day{day}/sample.dat"}
@@ -76,7 +82,7 @@ def findLastBoard(converted, amount=5):
             continue
 
         for item in converted["sets"]:
-            if item["id"] in winningOrder: 
+            if item["id"] in winningOrder:
                 continue
 
             for row in item["rows"]:
@@ -87,7 +93,7 @@ def findLastBoard(converted, amount=5):
                 if findMatches(drawnNumbers, col):
                     winningOrder.append(item["id"])
                     break
-            
+
             if (len(winningOrder) == len(converted["sets"])):
                 return (item, drawnNumbers)
 

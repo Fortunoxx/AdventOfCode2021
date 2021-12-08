@@ -1,4 +1,10 @@
+import sys
+sys.path.append('src/puzzle')
+import puzzle
+
 day = "03"
+puzzle.FetchForDay(day)
+
 files = [
     {"key": "input", "file": f"src/day{day}/input.dat"},
     {"key": "sample", "file": f"src/day{day}/sample.dat"}
@@ -7,20 +13,19 @@ files = [
 
 def convert(fileInfo):
     arrays = []
-    file = open(fileInfo["file"])
-    linecounter = 0
+    with open(fileInfo["file"]) as file:
+        linecounter = 0
 
-    for line in file:
-        arraywidth = 0
-        linecounter += 1
-        arr = []
-        for bit in line:
-            arraywidth += 1
-            if (bit != "\n"):
-                arr.append(int(bit))
-        arrays.append(arr)
+        for line in file:
+            arraywidth = 0
+            linecounter += 1
+            arr = []
+            for bit in line:
+                if (bit != "\n"):
+                    arr.append(int(bit))
+                    arraywidth += 1
+            arrays.append(arr)
 
-    file.close()
 
     return {"arrays": arrays, "lines": linecounter, "width": arraywidth}
 
@@ -67,7 +72,7 @@ def filter(arrays, mostCommon=True):
         for a in currentArray:
             num = a[idx]
             numbers.append(num)
-            
+
         bitToFind = 0
         if mostCommon and sum(numbers) >= len(currentArray) / 2:
             bitToFind = 1
@@ -81,7 +86,7 @@ def filter(arrays, mostCommon=True):
 
         currentArray = tempArray
         idx += 1
-    
+
     binary = ''.join(list(map(lambda x: str(x), currentArray[0])))
     return int(binary, 2)
 
@@ -92,7 +97,8 @@ def process2(fileInfos):
         intOxy = filter(arrays)
         intCo2 = filter(arrays, False)
 
-        result = {"file": fileInfo['key'], "intOxy": intOxy, "intCo2": intCo2, "result": intOxy * intCo2 }
+        result = {"file": fileInfo['key'], "intOxy": intOxy,
+                  "intCo2": intCo2, "result": intOxy * intCo2}
         print(f"Part II: {result}")
 
 

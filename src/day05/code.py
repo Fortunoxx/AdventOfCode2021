@@ -1,4 +1,10 @@
+import sys
+sys.path.append('src/puzzle')
+import puzzle
+
 day = "05"
+puzzle.FetchForDay(day)
+
 files = [
     {"key": "input", "file": f"src/day{day}/input.dat"},
     {"key": "sample", "file": f"src/day{day}/sample.dat"}
