@@ -21,7 +21,43 @@ def convert(fileInfo, horizontalOrVerticalOnly=True):
             end = (int(parts[1].split(",")[0]), int(parts[1].split(",")[1]))
             if horizontalOrVerticalOnly and (start[0] == end[0] or start[1] == end[1]):
                 coordinates.append((start, end))
+            else:
+                coordinates.append((start, end))
     return coordinates
+
+
+def calculateWaypoints2(coordinates):
+    waypoints = []
+
+    for item in coordinates:
+        x1 = item[0][0]
+        y1 = item[0][1]
+        x2 = item[1][0]
+        y2 = item[1][1]
+
+        x = 0
+        y = 0
+
+        if(x1 < x2):
+            x = 1
+        elif (x1 > x2):
+            x = -1
+        if(y1 < y2):
+            y = 1
+        elif (y1 > y2):
+            y = -1
+
+        step = (x,y)
+
+        current = item[0]
+        end = item[1]
+
+        while current != end:
+            waypoints.append(current)
+            current = (current[0] + step[0], current[1] + step[1])
+        waypoints.append(current)
+
+    return (waypoints)
 
 
 def calculateWaypoints(coordinates):
@@ -87,17 +123,12 @@ def process(fileInfos):
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
-        counter = 0
-
-        file = open(fileInfo["file"])
-        for line in file:
-            counter += 1
-
-        file.close()
-
-        result = {"file": fileInfo['key']}
+        converted = convert(fileInfo)
+        calc = calculateWaypoints2(converted)
+        results = checkForDuplicates(calc)
+        counter = countDuplicates(results)
+        result = {"file": fileInfo['key'], "counter": counter}
         print(f"Part II: {result}")
 
-
 process(files)
-# process2(files)
+process2(files)
