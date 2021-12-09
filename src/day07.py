@@ -26,15 +26,35 @@ def align(positions):
     sort = sorted(positions)
     max = sort[-1]
     diff = None
-    current = None
     for i in range(max):
         totalDifference = 0
         for pos in sort:
             totalDifference += abs(pos-i)
         if diff is None or totalDifference < diff: 
             diff = totalDifference
-            current = i
-    return (diff, current)
+    return diff
+
+
+def align2(positions):
+    # sort array, determine max horizontal position - this will be the max (min will always be 0)
+    sort = sorted(positions)
+    max = sort[-1]
+    diff = None
+
+    # create a dictionary with enumerate to simply lookup fuel costs by index, this will be a dictionary from 0 to <max>
+    fuelCosts = {}
+    aggregated = 0
+    for idx, value in (enumerate(range(max+1))):
+        aggregated += value
+        fuelCosts[idx] = aggregated
+
+    for i in range(max):
+        totalDifference = 0
+        for pos in sort:
+            totalDifference += fuelCosts[abs(pos-i)]
+        if diff is None or totalDifference < diff: 
+            diff = totalDifference
+    return diff 
 
 def process(fileInfos):
     for fileInfo in fileInfos:
@@ -47,9 +67,12 @@ def process(fileInfos):
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
-        result = {"file": fileInfo['key'], "result": "todo" }
+        converted = convert(fileInfo)
+        result = align2(converted)
+
+        result = {"file": fileInfo['key'], "result": result } # 99266250
         print(f"Part II: {result}")
 
 
 process(files)
-# process2(files)
+process2(files)
