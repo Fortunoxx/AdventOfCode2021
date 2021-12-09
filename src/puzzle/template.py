@@ -3,12 +3,13 @@ sys.path.append('src/puzzle')
 import puzzle
 
 day = "xx"
+
 puzzle.FetchForDay(day)
 
 
 files = [ 
-    { "key": "input", "file": f"src/day{day}/input.dat" },
-    { "key": "sample", "file": f"src/day{day}/sample.dat" }
+    { "key": "input", "file": f"test/day{day}.input.dat" },
+    { "key": "sample", "file": f"test/day{day}.sample.dat" }
 ]
 
 def process(fileInfos):
