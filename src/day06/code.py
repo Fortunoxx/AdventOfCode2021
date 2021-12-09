@@ -9,7 +9,7 @@ puzzle.FetchForDay(day)
 
 files = [
     { "key": "input", "file": f"src/day{day}/input.dat" },
-    {"key": "sample", "file": f"src/day{day}/sample.dat"}
+    { "key": "sample", "file": f"src/day{day}/sample.dat" }
 ]
 
 
@@ -32,6 +32,36 @@ def reproduce(input, iterations=80, resetTimer=6, creationTimer=8):
     return result
 
 
+def reproduceByNumber(input, iterations=80, resetTimer=6, creationTimer=8):
+    if(iterations > 0):
+        resettedElements = 0
+        stateAfterCycle = {}
+        for i in input:
+            if i == 0:
+                stateAfterCycle[creationTimer] = input[i]
+                resettedElements = input[i]
+            else:
+                stateAfterCycle[i-1] = input[i]
+        if not resetTimer in stateAfterCycle:
+            stateAfterCycle[resetTimer] = resettedElements
+        else:
+            stateAfterCycle[resetTimer] += resettedElements
+        result = reproduceByNumber(stateAfterCycle, iterations - 1)
+    else:
+        result = input
+    return result
+
+
+def aggregate(input):
+    results = {}
+    for i in input:
+        if not i in results:
+            results[i] = 1
+        else:
+            results[i] += 1
+    return results
+
+
 def convert(fileInfo):
     with open(fileInfo["file"]) as file:
         lines = file.read()
@@ -51,17 +81,16 @@ def process(fileInfos):
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
-        counter = 0
+        converted = convert(fileInfo)
+        aggregated = aggregate(converted)
+        results = reproduceByNumber(aggregated, 256)
+        result = 0
+        for i in results:
+            result += results[i]
 
-        file = open(fileInfo["file"])
-        for line in file:
-            counter += 1
-
-        file.close()
-
-        result = {"file": fileInfo['key']}
+        result = {"file": fileInfo['key'], "result": result }
         print(f"Part II: {result}")
 
 
 process(files)
-# process2(files)
+process2(files)
