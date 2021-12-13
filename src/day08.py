@@ -170,7 +170,7 @@ def process2(fileInfos):
         for c in calculated:
             summe += c
 
-        result = {"file": fileInfo['key'], "summe": summe } # 99266250
+        result = {"file": fileInfo['key'], "summe": summe }
         print(f"Part II: {result}")
 
 

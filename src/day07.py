@@ -70,7 +70,7 @@ def process2(fileInfos):
         converted = convert(fileInfo)
         result = align2(converted)
 
-        result = {"file": fileInfo['key'], "result": result } # 99266250
+        result = {"file": fileInfo['key'], "result": result }
         print(f"Part II: {result}")
 
 
