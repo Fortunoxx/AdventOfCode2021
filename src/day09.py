@@ -45,6 +45,73 @@ def findLowPoints(arrays):
     return results
 
 
+def addNeighbours(coordinates, values, processed, results, maxX = 9, maxY = 4):
+    x = coordinates[0]
+    y = coordinates[1]
+
+    tempCoordinates = (x - 1, y)
+    if x > 0 and tempCoordinates not in processed:
+        processed.append(tempCoordinates)
+        tempValue = values[tempCoordinates]
+        if tempValue != 9:
+            results.append(tempCoordinates)
+            addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+    tempCoordinates = (x + 1, y)
+    if x < maxX and tempCoordinates not in processed:
+        processed.append(tempCoordinates)
+        tempValue = values[tempCoordinates]
+        if tempValue != 9:
+            results.append(tempCoordinates)
+            addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+    tempCoordinates = (x, y - 1)
+    if y > 0 and tempCoordinates not in processed:
+        processed.append(tempCoordinates)
+        tempValue = values[tempCoordinates]
+        if tempValue != 9:
+            results.append(tempCoordinates)
+            addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+    tempCoordinates = (x, y + 1)
+    if y < maxY and tempCoordinates not in processed:
+        processed.append(tempCoordinates)
+        tempValue = values[tempCoordinates]
+        if tempValue != 9:
+            results.append(tempCoordinates)
+            addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+    return results
+
+def findBasins(arrays):
+    # store all processed coordinates (x,y)
+    values = {}
+    y = 0
+    maxX = 0
+    maxY = 0
+    for array in arrays:
+        x = 0
+        for a in array:
+            coordinates = (x,y)
+            values[coordinates] = a
+            x += 1
+            if maxX < x:
+                maxX = x
+        y += 1
+        if maxY < y:
+            maxY = y
+
+    processed = []
+    results = []
+    for c in values:
+        if c not in processed:
+            results.append(addNeighbours(c, values, processed, [], maxX - 1, maxY - 1))
+    return results
+
+
+def findGreatesByCount(arrays, counter = 3):
+    counters = []
+    for a in arrays:
+        counters.append(len(a))
+    return sorted(counters)[-1*counter:]
+
+
 def convert(fileInfo):
     with open(fileInfo["file"]) as file:
         arrays = []
@@ -65,17 +132,22 @@ def process(fileInfos):
         for l in low:
             summe += l + 1
 
-        result = {"file": fileInfo['key'], "summe": summe } # 1775 too high
+        result = {"file": fileInfo['key'], "summe": summe }
         print(f"Part I: {result}")
 
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
+        basins = findBasins(converted)
+        top = findGreatesByCount(basins)
+        result1 = 1
+        for item in top:
+            result1 *= item
 
-        result = {"file": fileInfo['key'], "converted": converted }
+        result = {"file": fileInfo['key'], "result1": result1 }
         print(f"Part II: {result}")
 
 
 process(files)
-# process2(files)
+process2(files)
