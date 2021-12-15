@@ -1,4 +1,7 @@
 import sys
+import turtle
+from turtle import *
+
 sys.path.append('src/puzzle')
 
 day = "09"
@@ -45,38 +48,72 @@ def findLowPoints(arrays):
     return results
 
 
+def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
+    color = 'aquamarine'
+    if UseAlternateColor == True:
+        color = 'sienna'
+
+    pen.penup()
+    offset = offsetBase * factor
+    pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor - offset)
+    pen.color(color)
+    pen.dot()
+
+
 def addNeighbours(coordinates, values, processed, results, maxX = 9, maxY = 4):
     x = coordinates[0]
     y = coordinates[1]
+
+    if coordinates not in processed:
+        processed.append(coordinates)
+        tempValue = values[coordinates]
+        if tempValue != 9:
+            printDot(coordinates)
+            results.append(coordinates)
+            addNeighbours(coordinates, values, processed, results, maxX, maxY)
+        else:
+            printDot(coordinates, True)
 
     tempCoordinates = (x - 1, y)
     if x > 0 and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
+            printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+        else:
+            printDot(tempCoordinates, True)
     tempCoordinates = (x + 1, y)
     if x < maxX and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
+            printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+        else:
+            printDot(tempCoordinates, True)
     tempCoordinates = (x, y - 1)
     if y > 0 and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
+            printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+        else:
+            printDot(tempCoordinates, True)
     tempCoordinates = (x, y + 1)
     if y < maxY and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
+            printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
+        else:
+            printDot(tempCoordinates, True)
     return results
 
 def findBasins(arrays):
@@ -149,5 +186,13 @@ def process2(fileInfos):
         print(f"Part II: {result}")
 
 
+window_ = turtle.Screen()
+window_.bgcolor("darkslategray")
+window_.title("Turtle")
+pen = turtle.Turtle()
+pen.speed(0)
+turtle.tracer(20,0)
+
 process(files)
 process2(files)
+turtle.exitonclick()
