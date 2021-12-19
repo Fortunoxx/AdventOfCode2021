@@ -28,6 +28,7 @@ def increaseAndFlash(array, totalFlashCounter, energyGain = 1, minFlashLevel = 1
 
     # todo: increase adjacent objects by number of neighbours with 9 or more
     hasFlashed = True
+    localFlashCounter = 0
     while hasFlashed:
         hasFlashed = False
         y = 0
@@ -37,14 +38,14 @@ def increaseAndFlash(array, totalFlashCounter, energyGain = 1, minFlashLevel = 1
                 if val >= 10:
                     hasFlashed = True
                     totalFlashCounter += 1
+                    localFlashCounter += 1
                     increaseAdjacent((x, y), modified, len(row), len(modified))
                     modified[y][x] = 0
                 x += 1
             y += 1
 
     z = np.where(modified >= minFlashLevel, 0, modified)
-    return (z, totalFlashCounter)
-    # return z
+    return (z, totalFlashCounter, localFlashCounter)
 
 
 def convert(fileInfo):
@@ -64,17 +65,27 @@ def process(fileInfos, counter = 10):
         converted = convert(fileInfo)
         totalFlashCounter = 0
         for i in range(counter):
-            (converted, totalFlashCounter) = increaseAndFlash(converted, totalFlashCounter)
+            (converted, totalFlashCounter, _) = increaseAndFlash(converted, totalFlashCounter)
 
         result = {"file": fileInfo['key'], "score": totalFlashCounter, "array": converted }
         print(f"Part I: {result}")
 
 
-def process2(fileInfos):
+def process2(fileInfos, maxIterations):
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
+        numberOfFlashesWhenAllAreActiveSimultaneously = len(converted) * len(converted[0]) # not so nice I know
+        allAreFlashing = False
+        iteration = 0
+        totalFlashCounter = 0
+        while not allAreFlashing and iteration < maxIterations: # fallback to prevent infinite loop
+            iteration += 1
+            (converted, totalFlashCounter, numberFlashingCurrently) = increaseAndFlash(converted, totalFlashCounter)
+            if numberFlashingCurrently == numberOfFlashesWhenAllAreActiveSimultaneously:
+                allAreFlashing = True
+                break
 
-        result = {"file": fileInfo['key'], "score": converted }
+        result = {"file": fileInfo['key'], "iteration": iteration, "array": converted }
         print(f"Part II: {result}")
 
 # declare a static array of coordinates pointing to neighbours
@@ -87,4 +98,4 @@ for a in range(3):
             directions.append((x, y))
 
 process(files, 100)
-# process2(files)
+process2(files, 500)
