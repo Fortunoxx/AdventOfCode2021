@@ -3,13 +3,16 @@ sys.path.append('src/puzzle')
 
 day = "13"
 
+import turtle
+from turtle import *
 import puzzle
 puzzle.FetchForDay(day)
 
 
 files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
+    { "key": "input", "file": f"test/day{day}.input.dat" }
+    # ,
+    # { "key": "sample", "file": f"test/day{day}.sample.dat" }
 ]
 
 
@@ -62,17 +65,45 @@ def process(fileInfos):
             folded = fold(folded, instruction)
             break # stop after first iteration
 
-        result = {"file": fileInfo['key'], "folded": len(folded) } # 837 too high
+        result = {"file": fileInfo['key'], "folded": len(folded) }
         print(f"Part I: {result}")
 
 
 def process2(fileInfos):
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
+        folded = converted[0]
+        for instruction in converted[1]:
+            folded = fold(folded, instruction)
 
-        result = {"file": fileInfo['key'], "converted": converted }
+        for coord in folded:
+            printDot(coord, True)
+
+        result = {"file": fileInfo['key'], "folded": len(folded) }
         print(f"Part II: {result}")
 
 
+def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
+    color = 'aquamarine'
+    if UseAlternateColor == True:
+        color = 'sienna'
+
+    pen.penup()
+    offset = offsetBase * factor
+    pen.goto(coordinates[0] * factor - offset, (coordinates[1] * factor - offset) * -1)
+    pen.color(color)
+    pen.dot()
+
+
+
+window_ = turtle.Screen()
+window_.bgcolor("darkslategray")
+window_.title("Turtle")
+pen = turtle.Turtle()
+pen.speed(0)
+turtle.tracer(20,0)
+
 process(files)
-# process2(files)
+process2(files)
+
+turtle.exitonclick()
