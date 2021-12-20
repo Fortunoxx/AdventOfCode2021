@@ -10,9 +10,8 @@ puzzle.FetchForDay(day)
 
 
 files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" }
-    # ,
-    # { "key": "sample", "file": f"test/day{day}.sample.dat" }
+    { "key": "input", "file": f"test/day{day}.input.dat" },
+    { "key": "sample", "file": f"test/day{day}.sample.dat" }
 ]
 
 
@@ -70,6 +69,8 @@ def process(fileInfos):
 
 
 def process2(fileInfos):
+    offset = 80
+    alternate = True
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
         folded = converted[0]
@@ -77,7 +78,10 @@ def process2(fileInfos):
             folded = fold(folded, instruction)
 
         for coord in folded:
-            printDot(coord, True)
+            printDot(coord, alternate, 6, offset)
+
+        offset -= 20
+        alternate = False
 
         result = {"file": fileInfo['key'], "folded": len(folded) }
         print(f"Part II: {result}")
@@ -86,11 +90,11 @@ def process2(fileInfos):
 def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
     color = 'aquamarine'
     if UseAlternateColor == True:
-        color = 'sienna'
+        color = 'orange'
 
     pen.penup()
     offset = offsetBase * factor
-    pen.goto(coordinates[0] * factor - offset, (coordinates[1] * factor - offset) * -1)
+    pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor * -1 - offset)
     pen.color(color)
     pen.dot()
 
