@@ -92,6 +92,7 @@ def convert2(fileInfo, multiply = 0):
 
     return (nodes, distances, len(arrays))
 
+
 def getNeighbours(pos, source):
     theMax = len(source) # we assume, there is an equal number of rows and columns
     x = pos[0]
@@ -133,6 +134,7 @@ def process2(fileInfos):
 
         result = {"file": fileInfo['key'], "calculatedMinimalRisk": calculatedMinimalRisk }
         print(f"Part II: {result}")
+
 
 process(files)
 process2(files)
