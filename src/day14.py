@@ -3,7 +3,6 @@ sys.path.append('src/puzzle')
 
 day = "14"
 
-import time
 import puzzle
 puzzle.FetchForDay(day)
 

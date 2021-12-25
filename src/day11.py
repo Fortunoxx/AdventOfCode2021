@@ -26,7 +26,7 @@ def increaseAndFlash(array, totalFlashCounter, energyGain = 1, minFlashLevel = 1
     converted = np.array(array)
     modified = converted + energyGain
 
-    # todo: increase adjacent objects by number of neighbours with 9 or more
+    # increase adjacent objects by number of neighbours with 9 or more
     hasFlashed = True
     localFlashCounter = 0
     while hasFlashed:
@@ -64,7 +64,7 @@ def process(fileInfos, counter = 10):
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
         totalFlashCounter = 0
-        for i in range(counter):
+        for _ in range(counter):
             (converted, totalFlashCounter, _) = increaseAndFlash(converted, totalFlashCounter)
 
         result = {"file": fileInfo['key'], "score": totalFlashCounter, "array": converted }
