@@ -45,7 +45,7 @@ def dijkstra(nodes, distances):
     return visited
 
 
-def convert2(fileInfo, multiply = 0):
+def convert(fileInfo, multiply = 0):
     arrays = []
     with open(fileInfo["file"]) as file:
         for line in file:
