@@ -77,7 +77,6 @@ def parseOperator(idx, source, version, parent, type_id):
     length_type_id = int(source[newIdx:newIdx+length_type_id_length], 2)
     newIdx += length_type_id_length
 
-    # ???
     item = { "version": version, "type_id": type_id, "items": [] }
     if not 'items' in parent:
         parent['items'] = [item]
@@ -96,7 +95,8 @@ def parseOperator(idx, source, version, parent, type_id):
         newIdx += type_1_length
         (newIdx, item) = parsePacketsByCounter(source, newIdx, item, number_of_sub_packages)
 
-    return newIdx #, parent)
+    return newIdx
+
 
 def parseLiteral(idx, source, version, parent, type_id = 4):
     newIdx = idx
@@ -119,7 +119,7 @@ def parseLiteral(idx, source, version, parent, type_id = 4):
             else:
                 parent['items'].append(item)
 
-    return newIdx #, item)
+    return newIdx
 
 
 def calculate_version_sum(packets, result = 0):
@@ -128,6 +128,55 @@ def calculate_version_sum(packets, result = 0):
         if 'items' in item:
             result = calculate_version_sum(item, result)
     return result
+
+
+def calculate_packet_sum(item, result = 0):
+    type_id = item['type_id']
+    if type_id == 0:
+        sub = 0
+        for itm in item['items']:
+            sub += calculate_packet_sum(itm)
+        return sub
+    elif type_id == 1:
+        sub = 1
+        for itm in item['items']:
+            sub *= calculate_packet_sum(itm)
+        return sub
+    elif type_id == 2:
+        results = []
+        for itm in item['items']:
+            results.append(calculate_packet_sum(itm))
+        return sorted(results)[0] # minimum
+    elif type_id == 4:
+        return item['value']
+    elif type_id == 3:
+        results = []
+        for itm in item['items']:
+            results.append(calculate_packet_sum(itm))
+        return sorted(results)[-1] # maximum
+    elif type_id == 5:
+        items = item['items']
+        result1 = calculate_packet_sum(items[0])
+        result2 = calculate_packet_sum(items[1])
+        if result1 > result2:
+            return 1
+        return 0    
+    elif type_id == 6:
+        items = item['items']
+        result1 = calculate_packet_sum(items[0])
+        result2 = calculate_packet_sum(items[1])
+        if result1 < result2:
+            return 1
+        return 0
+    elif type_id == 7:
+        items = item['items']
+        result1 = calculate_packet_sum(items[0])
+        result2 = calculate_packet_sum(items[1])
+        if result1 == result2:
+            return 1
+        return 0
+    else:
+        return 0
 
 
 def process(fileInfos):
@@ -144,10 +193,13 @@ def process(fileInfos):
 def process2(fileInfos):
     for fileInfo in fileInfos:
         converted = convert(fileInfo)
+        for c in converted:
+            packets = parsePackets(c[0], 0, {}, len(c[0])-7)[1]
+            calc = calculate_packet_sum(packets['items'][0])
 
-        result = {"file": fileInfo['key'], "converted": converted }
-        print(f"Part II: {result}")
+            result = {"file": fileInfo['key'], "calc": calc, "original_hex": c[1] }
+            print(f"Part II: {result}")
 
 
 process(files)
-# process2(files)
+process2(files)
