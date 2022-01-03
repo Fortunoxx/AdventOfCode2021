@@ -2,16 +2,10 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "08"
+file = { "key": "input", "file": f"test/data/day{day}.sample.dat" }
 
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "bigger-sample", "file": f"test/day{day}.sample-big.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def convert(fileInfo):
@@ -153,26 +147,26 @@ def deduct(items):
     return results
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        counter = count(converted, [2,3,4,7])
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    counter = count(converted, [2,3,4,7])
 
-        result = {"file": fileInfo['key'], "counter": counter }
-        print(f"Part I: {result}")
-
-
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        calculated = deduct(converted)
-        summe = 0
-        for c in calculated:
-            summe += c
-
-        result = {"file": fileInfo['key'], "summe": summe }
-        print(f"Part II: {result}")
+    # result = {"file": fileInfo['key'], "counter": counter }
+    # print(f"Part I: {result}")
+    return counter
 
 
-process(files)
-process2(files)
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    calculated = deduct(converted)
+    summe = 0
+    for c in calculated:
+        summe += c
+
+    # result = {"file": fileInfo['key'], "summe": summe }
+    # print(f"Part II: {result}")
+    return summe
+
+
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

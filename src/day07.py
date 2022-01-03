@@ -2,15 +2,10 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "07"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def convert(fileInfo):
@@ -55,24 +50,19 @@ def align2(positions):
         if diff is None or totalDifference < diff: 
             diff = totalDifference
     return diff 
+    
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        result = align(converted)
-
-        result = {"file": fileInfo['key'], "result": result }
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    result = align(converted)
+    return result
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        result = align2(converted)
-
-        result = {"file": fileInfo['key'], "result": result }
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    result = align2(converted)
+    return result
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

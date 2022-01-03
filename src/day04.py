@@ -1,14 +1,11 @@
 import sys
 sys.path.append('src/puzzle')
-import puzzle
 
 day = "04"
-puzzle.FetchForDay(day)
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
-files = [
-    {"key": "input", "file": f"test/day{day}.input.dat"},
-    {"key": "sample", "file": f"test/day{day}.sample.dat"}
-]
+import puzzle
+puzzle.FetchForDay(day)
 
 
 def getFieldFromLineNumber(lineNumber):
@@ -126,23 +123,19 @@ def calculateSum(item, numbers):
     return theSum * theLast
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        results = findWinningBoard(converted)
-        theResult = calculateSum(results[0], results[1])
-        result = {"file": fileInfo['key'], "theResult": theResult}
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    results = findWinningBoard(converted)
+    theResult = calculateSum(results[0], results[1])
+    return theResult
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        results = findLastBoard(converted)
-        theResult = calculateSum(results[0], results[1])
-        result = {"file": fileInfo['key'], "theResult": theResult}
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    results = findLastBoard(converted)
+    theResult = calculateSum(results[0], results[1])
+    return theResult
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

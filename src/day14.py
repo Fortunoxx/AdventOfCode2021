@@ -2,15 +2,10 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "14"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def splitIntoParts(polymer, size = 2):
@@ -79,12 +74,12 @@ def grow2(splittedPolymer, instructions, elementCounters):
 
 
 def countCharacters(inputString):
-    allowedCharacters = []
-    for one in range(65, 90):
-        allowedCharacters.append(chr(one))
     result = {}
-    for c in allowedCharacters:
-        result[c] = inputString.count(c)
+    countedCharacters = []
+    for i in inputString:
+        if i not in countedCharacters:
+            result[i] = inputString.count(i)
+            countedCharacters.append(i)
     return result
 
 
@@ -104,52 +99,48 @@ def convert(fileInfo):
         return (polymer, instructions)
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        polymer = converted[0]
-        for _ in range(10):
-            polymer = grow(polymer, converted[1])
-        counted = countCharacters(polymer)
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    polymer = converted[0]
+    for _ in range(10):
+        polymer = grow(polymer, converted[1])
+    counted = countCharacters(polymer)
 
-        min = sorted(counted.values())[::1][0]
-        max = sorted(counted.values())[::-1][0]
-        res = max - min
+    min = sorted(counted.values())[::1][0]
+    max = sorted(counted.values())[::-1][0]
+    res = max - min
 
-        result = {"file": fileInfo['key'], "result": res }
-        print(f"Part I: {result}")
+    return res
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
 
-        polymer = converted[0]
-        elementCounters = {}
-        for p in polymer:
-            if not p in elementCounters:
-                elementCounters[p] = 1
-            else:
-                elementCounters[p] += 1
+    polymer = converted[0]
+    elementCounters = {}
+    for p in polymer:
+        if not p in elementCounters:
+            elementCounters[p] = 1
+        else:
+            elementCounters[p] += 1
 
-        parts = splitIntoParts(polymer)
-        components = {}
+    parts = splitIntoParts(polymer)
+    components = {}
 
-        for part in parts:
-            if part not in components:
-                components[part] = 1
-            else:
-                components[part] += 1
+    for part in parts:
+        if part not in components:
+            components[part] = 1
+        else:
+            components[part] += 1
 
-        for _ in range(40):
-            (components, elementCounters) = grow2(components, converted[1], elementCounters)
-        
-        min = sorted(elementCounters.values())[::1][0]
-        max = sorted(elementCounters.values())[::-1][0]
-        res = max - min
+    for _ in range(40):
+        (components, elementCounters) = grow2(components, converted[1], elementCounters)
+    
+    min = sorted(elementCounters.values())[::1][0]
+    max = sorted(elementCounters.values())[::-1][0]
+    res = max - min
 
-        result = {"file": fileInfo['key'], "result": res }
-        print(f"Part II: {result}")
+    return res
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

@@ -3,21 +3,15 @@ sys.path.append('src/puzzle')
 import puzzle
 
 day = "02"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 puzzle.FetchForDay(day)
 
 
-files = [
-    {"key": "input", "file": f"test/day{day}.input.dat"},
-    {"key": "sample", "file": f"test/day{day}.sample.dat"}
-]
+def solve_part1(fileInfo):
+    horiz = 0
+    depth = 0
 
-
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        horiz = 0
-        depth = 0
-
-        file = open(fileInfo["file"])
+    with open(fileInfo["file"]) as file:
         for line in file:
             parts = line.split(' ')
             cmd = parts[0]
@@ -29,20 +23,15 @@ def process(fileInfos):
             elif cmd == "up":
                 depth -= num
 
-        file.close()
-
-        result = {"file": fileInfo['key'], "horiz": horiz,
-                  "depth": depth, "prod": horiz*depth}
-        print(f"Part I: {result}")
+    return horiz*depth
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        horiz = 0
-        depth = 0
-        aim = 0
+def solve_part2(fileInfo):
+    horiz = 0
+    depth = 0
+    aim = 0
 
-        file = open(fileInfo["file"])
+    with open(fileInfo["file"]) as file:
         for line in file:
             parts = line.split(' ')
             cmd = parts[0]
@@ -55,12 +44,7 @@ def process2(fileInfos):
             elif cmd == "up":
                 aim -= num
 
-        file.close()
-        
-        result = {"file": fileInfo['key'], "horiz": horiz,
-                  "depth": depth, "prod": horiz*depth}
-        print(f"Part II: {result}")
+    return horiz*depth
 
-
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

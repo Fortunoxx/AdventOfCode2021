@@ -2,15 +2,10 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "06"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def reproduce(input, iterations=80, resetTimer=6, creationTimer=8):
@@ -70,27 +65,21 @@ def convert(fileInfo):
         return parts
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        results = reproduce(converted)
-
-        result = {"file": fileInfo['key'], "result": len(results) }
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    results = reproduce(converted)
+    return len(results)
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        aggregated = aggregate(converted)
-        results = reproduceByNumber(aggregated, 256)
-        result = 0
-        for i in results:
-            result += results[i]
-
-        result = {"file": fileInfo['key'], "result": result }
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    aggregated = aggregate(converted)
+    results = reproduceByNumber(aggregated, 256)
+    result = 0
+    for i in results:
+        result += results[i]
+    return result
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

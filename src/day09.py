@@ -1,19 +1,14 @@
 import sys
-import turtle
-from turtle import *
+# import turtle
+# from turtle import *
 
 sys.path.append('src/puzzle')
 
 day = "09"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def findNeighbours(arrays, x, y, maxX = 9, maxY = 4):
@@ -68,52 +63,52 @@ def addNeighbours(coordinates, values, processed, results, maxX = 9, maxY = 4):
         processed.append(coordinates)
         tempValue = values[coordinates]
         if tempValue != 9:
-            printDot(coordinates)
+            # printDot(coordinates)
             results.append(coordinates)
             addNeighbours(coordinates, values, processed, results, maxX, maxY)
-        else:
-            printDot(coordinates, True)
+        # else:
+        #     printDot(coordinates, True)
 
     tempCoordinates = (x - 1, y)
     if x > 0 and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
-            printDot(tempCoordinates)
+            # printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
-        else:
-            printDot(tempCoordinates, True)
+        # else:
+        #     printDot(tempCoordinates, True)
     tempCoordinates = (x + 1, y)
     if x < maxX and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
-            printDot(tempCoordinates)
+            # printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
-        else:
-            printDot(tempCoordinates, True)
+        # else:
+        #     printDot(tempCoordinates, True)
     tempCoordinates = (x, y - 1)
     if y > 0 and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
-            printDot(tempCoordinates)
+            # printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
-        else:
-            printDot(tempCoordinates, True)
+        # else:
+        #     printDot(tempCoordinates, True)
     tempCoordinates = (x, y + 1)
     if y < maxY and tempCoordinates not in processed:
         processed.append(tempCoordinates)
         tempValue = values[tempCoordinates]
         if tempValue != 9:
-            printDot(tempCoordinates)
+            # printDot(tempCoordinates)
             results.append(tempCoordinates)
             addNeighbours(tempCoordinates, values, processed, results, maxX, maxY)
-        else:
-            printDot(tempCoordinates, True)
+        # else:
+        #     printDot(tempCoordinates, True)
     return results
 
 def findBasins(arrays):
@@ -161,38 +156,32 @@ def convert(fileInfo):
         return arrays
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        low = findLowPoints(converted)
-        summe = 0
-        for l in low:
-            summe += l + 1
-
-        result = {"file": fileInfo['key'], "summe": summe }
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    low = findLowPoints(converted)
+    summe = 0
+    for l in low:
+        summe += l + 1
+    return summe
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        basins = findBasins(converted)
-        top = findGreatesByCount(basins)
-        result1 = 1
-        for item in top:
-            result1 *= item
-
-        result = {"file": fileInfo['key'], "result1": result1 }
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    basins = findBasins(converted)
+    top = findGreatesByCount(basins)
+    result1 = 1
+    for item in top:
+        result1 *= item
+    return result1
 
 
-window_ = turtle.Screen()
-window_.bgcolor("darkslategray")
-window_.title("Turtle")
-pen = turtle.Turtle()
-pen.speed(0)
-turtle.tracer(20,0)
+# window_ = turtle.Screen()
+# window_.bgcolor("darkslategray")
+# window_.title("Turtle")
+# pen = turtle.Turtle()
+# pen.speed(0)
+# turtle.tracer(20,0)
 
-process(files)
-process2(files)
-turtle.exitonclick()
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")
+# turtle.exitonclick()

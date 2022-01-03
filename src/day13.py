@@ -2,17 +2,12 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "13"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
-import turtle
-from turtle import *
+# import turtle
+# from turtle import *
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def convert(fileInfo):
@@ -56,58 +51,57 @@ def fold(data, foldingInstructions):
     return folded
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        folded = converted[0]
-        for instruction in converted[1]:
-            folded = fold(folded, instruction)
-            break # stop after first iteration
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    folded = converted[0]
+    for instruction in converted[1]:
+        folded = fold(folded, instruction)
+        break # stop after first iteration
 
-        result = {"file": fileInfo['key'], "folded": len(folded) }
-        print(f"Part I: {result}")
+    # result = {"file": fileInfo['key'], "folded": len(folded) }
+    # print(f"Part I: {result}")
+    return len(folded)
 
 
-def process2(fileInfos):
+def solve_part2(fileInfo):
     offset = 80
-    alternate = True
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        folded = converted[0]
-        for instruction in converted[1]:
-            folded = fold(folded, instruction)
+    # alternate = True
+    converted = convert(fileInfo)
+    folded = converted[0]
+    for instruction in converted[1]:
+        folded = fold(folded, instruction)
 
-        for coord in folded:
-            printDot(coord, alternate, 6, offset)
+    # for coord in folded:
+    #     printDot(coord, alternate, 6, offset)
 
-        offset -= 20
-        alternate = False
+    # offset -= 20
+    # alternate = False
 
-        result = {"file": fileInfo['key'], "folded": len(folded) }
-        print(f"Part II: {result}")
-
-
-def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
-    color = 'aquamarine'
-    if UseAlternateColor == True:
-        color = 'orange'
-
-    pen.penup()
-    offset = offsetBase * factor
-    pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor * -1 - offset)
-    pen.color(color)
-    pen.dot()
+    # result = {"file": fileInfo['key'], "folded": len(folded) }
+    # print(f"Part II: {result}")
+    return len(folded)
 
 
+# def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
+#     color = 'aquamarine'
+#     if UseAlternateColor == True:
+#         color = 'orange'
 
-window_ = turtle.Screen()
-window_.bgcolor("darkslategray")
-window_.title("Turtle")
-pen = turtle.Turtle()
-pen.speed(0)
-turtle.tracer(20,0)
+#     pen.penup()
+#     offset = offsetBase * factor
+#     pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor * -1 - offset)
+#     pen.color(color)
+#     pen.dot()
 
-process(files)
-process2(files)
 
-turtle.exitonclick()
+# window_ = turtle.Screen()
+# window_.bgcolor("darkslategray")
+# window_.title("Turtle")
+# pen = turtle.Turtle()
+# pen.speed(0)
+# turtle.tracer(20,0)
+
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")
+
+# turtle.exitonclick()

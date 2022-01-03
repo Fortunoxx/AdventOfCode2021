@@ -2,16 +2,13 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "10"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
+chars = { '(': ')', '<': '>', '[': ']', '{': '}' }
 
 import math
 import puzzle
 puzzle.FetchForDay(day)
 
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 def isOpeningChar(openingChar, charTable):
     if openingChar in charTable.keys():
@@ -117,26 +114,19 @@ def calculateAndSortResults(arrays):
     return res
 
 
-def process(fileInfos, charTable):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        separated = separateChunks(converted, charTable)
-        score = calculateIllegalCharacterScore(separated[0])
+def solve_part1(fileInfo, charTable=chars):
+    converted = convert(fileInfo)
+    separated = separateChunks(converted, charTable)
+    score = calculateIllegalCharacterScore(separated[0])
+    return score
 
-        result = {"file": fileInfo['key'], "score": score }
-        print(f"Part I: {result}")
+def solve_part2(fileInfo, charTable=chars):
+    converted = convert(fileInfo)
+    separated = separateChunks(converted, charTable)
+    completed = autoCompleteChunks(separated[1], charTable)
+    calculated = calculateAndSortResults(completed)
+    return calculated
 
 
-def process2(fileInfos, charTable):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        separated = separateChunks(converted, charTable)
-        completed = autoCompleteChunks(separated[1], charTable)
-        calculated = calculateAndSortResults(completed)
-
-        result = {"file": fileInfo['key'], "calculated": calculated }
-        print(f"Part II: {result}")
-
-chars = { '(': ')', '<': '>', '[': ']', '{': '}' }
-process(files, chars)
-process2(files, chars)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

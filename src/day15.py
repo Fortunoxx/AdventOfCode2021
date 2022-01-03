@@ -2,16 +2,12 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "15"
+# file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
+file = {"key": "input", "file": f"test/data/day{day}.sample.dat"}
 
 import numpy as np
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def dijkstra(nodes, distances):
@@ -114,27 +110,21 @@ def calcId(x, y, size):
     return y * size + x
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert2(fileInfo)
-        d = dijkstra(converted[0], converted[1])
-        endPosition = converted[2] * converted[2] - 1
-        calculatedMinimalRisk = d[endPosition]
-
-        result = {"file": fileInfo['key'], "calculatedMinimalRisk": calculatedMinimalRisk }
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    d = dijkstra(converted[0], converted[1])
+    endPosition = converted[2] * converted[2] - 1
+    calculatedMinimalRisk = d[endPosition]
+    return calculatedMinimalRisk
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert2(fileInfo, 4)
-        d = dijkstra(converted[0], converted[1])
-        endPosition = converted[2] * converted[2] - 1
-        calculatedMinimalRisk = d[endPosition]
-
-        result = {"file": fileInfo['key'], "calculatedMinimalRisk": calculatedMinimalRisk }
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo, 4)
+    d = dijkstra(converted[0], converted[1])
+    endPosition = converted[2] * converted[2] - 1
+    calculatedMinimalRisk = d[endPosition]
+    return calculatedMinimalRisk
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

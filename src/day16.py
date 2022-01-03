@@ -2,28 +2,25 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "16"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import puzzle
 puzzle.FetchForDay(day)
 
 
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
-
-
 def convert(fileInfo):
     with open(fileInfo["file"]) as file:
-        bins = []
-        for line in file:
-            line = line.replace("\n", "")
-            binary = ''
-            num_of_bits = 4
-            for char in line:
-                binary += bin(int(char, 16))[2:].zfill(num_of_bits)
-            bins.append((binary, line))
-        return bins
+        line = file.read()
+        line = line.replace("\n", "")
+        return convertToBinary(line)
+
+
+def convertToBinary(line):
+    binary = ''
+    num_of_bits = 4
+    for char in line:
+        binary += bin(int(char, 16))[2:].zfill(num_of_bits)
+    return (binary, line)
 
 
 def parsePackets(binary, idx, parent, endIdx):
@@ -179,27 +176,17 @@ def calculate_packet_sum(item, result = 0):
         return 0
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        for c in converted:
-            packets = parsePackets(c[0], 0, {}, len(c[0])-7)[1] # this is the definitive end of the line, assuming there can be at most 7 trailing zeros
-            version_sum = calculate_version_sum(packets)
-
-            result = {"file": fileInfo['key'], "version_sum": version_sum, "original_hex": c[1] }
-            print(f"Part I: {result}")
+def solve_part1(data):
+    packets = parsePackets(data[0], 0, {}, len(data[0])-7)[1] # this is the definitive end of the line, assuming there can be at most 7 trailing zeros
+    version_sum = calculate_version_sum(packets)
+    return version_sum
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        for c in converted:
-            packets = parsePackets(c[0], 0, {}, len(c[0])-7)[1]
-            calc = calculate_packet_sum(packets['items'][0])
-
-            result = {"file": fileInfo['key'], "calc": calc, "original_hex": c[1] }
-            print(f"Part II: {result}")
+def solve_part2(data):
+    packets = parsePackets(data[0], 0, {}, len(data[0])-7)[1]
+    calc = calculate_packet_sum(packets['items'][0])
+    return calc
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(convert(file))}")
+print(f"Part 2: {solve_part2(convert(file))}")

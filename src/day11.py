@@ -2,16 +2,11 @@ import sys
 sys.path.append('src/puzzle')
 
 day = "11"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
 import numpy as np
 import puzzle
 puzzle.FetchForDay(day)
-
-
-files = [
-    { "key": "input", "file": f"test/day{day}.input.dat" },
-    { "key": "sample", "file": f"test/day{day}.sample.dat" }
-]
 
 
 def increaseAdjacent(coordinates, array, maxX, maxY):
@@ -60,33 +55,27 @@ def convert(fileInfo):
         return stacks
 
 
-def process(fileInfos, counter = 10):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        totalFlashCounter = 0
-        for _ in range(counter):
-            (converted, totalFlashCounter, _) = increaseAndFlash(converted, totalFlashCounter)
+def solve_part1(fileInfo, counter = 10):
+    converted = convert(fileInfo)
+    totalFlashCounter = 0
+    for _ in range(counter):
+        (converted, totalFlashCounter, _) = increaseAndFlash(converted, totalFlashCounter)
+    return totalFlashCounter
 
-        result = {"file": fileInfo['key'], "score": totalFlashCounter, "array": converted }
-        print(f"Part I: {result}")
-
-
-def process2(fileInfos, maxIterations):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        numberOfFlashesWhenAllAreActiveSimultaneously = len(converted) * len(converted[0]) # not so nice I know
-        allAreFlashing = False
-        iteration = 0
-        totalFlashCounter = 0
-        while not allAreFlashing and iteration < maxIterations: # fallback to prevent infinite loop
-            iteration += 1
-            (converted, totalFlashCounter, numberFlashingCurrently) = increaseAndFlash(converted, totalFlashCounter)
-            if numberFlashingCurrently == numberOfFlashesWhenAllAreActiveSimultaneously:
-                allAreFlashing = True
-                break
-
-        result = {"file": fileInfo['key'], "iteration": iteration, "array": converted }
-        print(f"Part II: {result}")
+def solve_part2(fileInfo, maxIterations):
+    converted = convert(fileInfo)
+    numberOfFlashesWhenAllAreActiveSimultaneously = len(converted) * len(converted[0]) # not so nice I know
+    allAreFlashing = False
+    iteration = 0
+    totalFlashCounter = 0
+    while not allAreFlashing and iteration < maxIterations: # fallback to prevent infinite loop
+        iteration += 1
+        (converted, totalFlashCounter, numberFlashingCurrently) = increaseAndFlash(converted, totalFlashCounter)
+        if numberFlashingCurrently == numberOfFlashesWhenAllAreActiveSimultaneously:
+            allAreFlashing = True
+            break
+    return iteration
+    
 
 # declare a static array of coordinates pointing to neighbours
 directions = []
@@ -97,5 +86,6 @@ for a in range(3):
         if (x,y) != (0,0):
             directions.append((x, y))
 
-process(files, 100)
-process2(files, 500)
+
+print(f"Part 1: {solve_part1(file, 100)}")
+print(f"Part 2: {solve_part2(file, 500)}")

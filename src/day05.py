@@ -1,14 +1,11 @@
 import sys
 sys.path.append('src/puzzle')
-import puzzle
 
 day = "05"
-puzzle.FetchForDay(day)
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 
-files = [
-    {"key": "input", "file": f"test/day{day}.input.dat"},
-    {"key": "sample", "file": f"test/day{day}.sample.dat"}
-]
+import puzzle
+puzzle.FetchForDay(day)
 
 
 def convert(fileInfo, horizontalOrVerticalOnly=True):
@@ -111,24 +108,20 @@ def countDuplicates(waypoints):
     return result
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        calc = calculateWaypoints(converted)
-        results = checkForDuplicates(calc)
-        counter = countDuplicates(results)
-        result = {"file": fileInfo['key'], "counter": counter}
-        print(f"Part I: {result}")
+def solve_part1(fileInfo):
+    converted = convert(fileInfo)
+    calc = calculateWaypoints(converted)
+    results = checkForDuplicates(calc)
+    counter = countDuplicates(results)
+    return counter
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        converted = convert(fileInfo)
-        calc = calculateWaypoints2(converted)
-        results = checkForDuplicates(calc)
-        counter = countDuplicates(results)
-        result = {"file": fileInfo['key'], "counter": counter}
-        print(f"Part II: {result}")
+def solve_part2(fileInfo):
+    converted = convert(fileInfo)
+    calc = calculateWaypoints2(converted)
+    results = checkForDuplicates(calc)
+    counter = countDuplicates(results)
+    return counter
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

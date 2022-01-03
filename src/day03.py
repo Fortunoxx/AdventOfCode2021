@@ -3,12 +3,8 @@ sys.path.append('src/puzzle')
 import puzzle
 
 day = "03"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 puzzle.FetchForDay(day)
-
-files = [
-    {"key": "input", "file": f"test/day{day}.input.dat"},
-    {"key": "sample", "file": f"test/day{day}.sample.dat"}
-]
 
 
 def convert(fileInfo):
@@ -30,38 +26,34 @@ def convert(fileInfo):
     return {"arrays": arrays, "lines": linecounter, "width": arraywidth}
 
 
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        arrays = convert(fileInfo)
-        length = int(arrays["lines"])
-        idx = 0
-        sum1 = ""
-        sum2 = ""
+def solve_part1(fileInfo):
+    arrays = convert(fileInfo)
+    length = int(arrays["lines"])
+    idx = 0
+    sum1 = ""
+    sum2 = ""
 
-        while idx < int(arrays["width"]):
-            numbers = []
-            for a in arrays["arrays"]:
-                num = a[idx]
-                numbers.append(num)
+    while idx < int(arrays["width"]):
+        numbers = []
+        for a in arrays["arrays"]:
+            num = a[idx]
+            numbers.append(num)
 
-            sum = 0
-            for n in numbers:
-                sum += n
+        sum = 0
+        for n in numbers:
+            sum += n
 
-            if sum > length / 2:
-                sum1 += "1"
-                sum2 += "0"
-            else:
-                sum1 += "0"
-                sum2 += "1"
-            idx += 1
+        if sum > length / 2:
+            sum1 += "1"
+            sum2 += "0"
+        else:
+            sum1 += "0"
+            sum2 += "1"
+        idx += 1
 
-        gamma = int(sum1, 2)
-        epsilon = int(sum2, 2)
-        result = {"file": fileInfo['key'], "gamma": gamma,
-                  "epsilon": epsilon, "result": gamma * epsilon}
-        print(f"Part I: {result}")
-
+    gamma = int(sum1, 2)
+    epsilon = int(sum2, 2)
+    return gamma * epsilon
 
 def filter(arrays, mostCommon=True):
     currentArray = arrays["arrays"]
@@ -91,16 +83,13 @@ def filter(arrays, mostCommon=True):
     return int(binary, 2)
 
 
-def process2(fileInfos):
-    for fileInfo in fileInfos:
-        arrays = convert(fileInfo)
-        intOxy = filter(arrays)
-        intCo2 = filter(arrays, False)
+def solve_part2(fileInfo):
+    arrays = convert(fileInfo)
+    intOxy = filter(arrays)
+    intCo2 = filter(arrays, False)
 
-        result = {"file": fileInfo['key'], "intOxy": intOxy,
-                  "intCo2": intCo2, "result": intOxy * intCo2}
-        print(f"Part II: {result}")
+    return intOxy * intCo2
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")

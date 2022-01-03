@@ -3,41 +3,32 @@ sys.path.append('src/puzzle')
 import puzzle
 
 day = "01"
+file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
 puzzle.FetchForDay(day)
 
 
-files = [
-    {"key": "input", "file": f"test/day{day}.input.dat"},
-    {"key": "sample", "file": f"test/day{day}.sample.dat"}
-]
+def solve_part1(fileInfo):
+    counter = 0
+    last = None
 
-
-def process(fileInfos):
-    for fileInfo in fileInfos:
-        counter = 0
-        last = None
-
-        file = open(fileInfo["file"])
+    with open(fileInfo["file"]) as file:
         for line in file:
             number = int(line)
             if last is not None and last < number:
                 counter += 1
             last = number
 
-        file.close()
-
-        print(f"Part I: {fileInfo['key']}: {counter}")
+    return counter
 
 
-def process2(fileInfos):
+def solve_part2(fileInfo):
     cnt = 3
-    for fileInfo in fileInfos:
-        counter = 0
-        last = None
-        arrays = []
-        results = []
+    counter = 0
+    last = None
+    arrays = []
+    results = []
 
-        file = open(fileInfo["file"])
+    with open(fileInfo["file"]) as file:
         for line in file:
             number = int(line)
             arrays.append([])
@@ -65,8 +56,8 @@ def process2(fileInfos):
                 counter += 1
             last = number
 
-        print(f"Part II: {fileInfo['key']}: {counter}")
+    return counter
 
 
-process(files)
-process2(files)
+print(f"Part 1: {solve_part1(file)}")
+print(f"Part 2: {solve_part2(file)}")
