@@ -140,9 +140,6 @@ def deduct(items):
 def solve_part1(fileInfo):
     converted = convert(fileInfo)
     counter = count(converted, [2,3,4,7])
-
-    # result = {"file": fileInfo['key'], "counter": counter }
-    # print(f"Part I: {result}")
     return counter
 
 
@@ -152,7 +149,4 @@ def solve_part2(fileInfo):
     summe = 0
     for c in calculated:
         summe += c
-
-    # result = {"file": fileInfo['key'], "summe": summe }
-    # print(f"Part II: {result}")
     return summe

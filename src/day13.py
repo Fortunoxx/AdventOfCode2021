@@ -49,9 +49,6 @@ def solve_part1(fileInfo):
     for instruction in converted[1]:
         folded = fold(folded, instruction)
         break # stop after first iteration
-
-    # result = {"file": fileInfo['key'], "folded": len(folded) }
-    # print(f"Part I: {result}")
     return len(folded)
 
 
@@ -68,9 +65,6 @@ def solve_part2(fileInfo):
 
     # offset -= 20
     # alternate = False
-
-    # result = {"file": fileInfo['key'], "folded": len(folded) }
-    # print(f"Part II: {result}")
     return len(folded)
 
 
