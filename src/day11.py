@@ -85,7 +85,3 @@ for a in range(3):
         y = b-1
         if (x,y) != (0,0):
             directions.append((x, y))
-
-
-print(f"Part 1: {solve_part1(file, 100)}")
-print(f"Part 2: {solve_part2(file, 500)}")

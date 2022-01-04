@@ -131,7 +131,3 @@ def solve_part2(fileInfo):
                 if a > maxX or b < minY:
                     break 
     return len(velocities)
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

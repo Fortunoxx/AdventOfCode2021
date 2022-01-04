@@ -89,7 +89,3 @@ def solve_part2(fileInfo):
     intCo2 = filter(arrays, False)
 
     return intOxy * intCo2
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

@@ -45,6 +45,3 @@ def solve_part2(fileInfo):
                 aim -= num
 
     return horiz*depth
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

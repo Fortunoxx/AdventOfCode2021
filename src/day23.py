@@ -36,7 +36,3 @@ def solve_part2(fileInfo):
 
     result = {"file": fileInfo['key'], "converted": converted }
     print(f"Part II: {result}")
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

@@ -126,7 +126,3 @@ def solve_part2(fileInfo, charTable=chars):
     completed = autoCompleteChunks(separated[1], charTable)
     calculated = calculateAndSortResults(completed)
     return calculated
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

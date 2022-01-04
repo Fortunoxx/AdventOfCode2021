@@ -186,7 +186,3 @@ def solve_part2(data):
     packets = parsePackets(data[0], 0, {}, len(data[0])-7)[1]
     calc = calculate_packet_sum(packets['items'][0])
     return calc
-
-
-print(f"Part 1: {solve_part1(convert(file))}")
-print(f"Part 2: {solve_part2(convert(file))}")

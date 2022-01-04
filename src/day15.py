@@ -124,7 +124,3 @@ def solve_part2(fileInfo):
     endPosition = converted[2] * converted[2] - 1
     calculatedMinimalRisk = d[endPosition]
     return calculatedMinimalRisk
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

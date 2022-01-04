@@ -62,7 +62,3 @@ def solve_part2(fileInfo):
     converted = convert(fileInfo)
     result = align2(converted)
     return result
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

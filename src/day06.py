@@ -79,7 +79,3 @@ def solve_part2(fileInfo):
     for i in results:
         result += results[i]
     return result
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

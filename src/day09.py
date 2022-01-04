@@ -181,7 +181,4 @@ def solve_part2(fileInfo):
 # pen = turtle.Turtle()
 # pen.speed(0)
 # turtle.tracer(20,0)
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")
 # turtle.exitonclick()

@@ -1,12 +1,3 @@
-import sys
-sys.path.append('src/puzzle')
-import puzzle
-
-day = "01"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-puzzle.FetchForDay(day)
-
-
 def solve_part1(fileInfo):
     counter = 0
     last = None
@@ -57,7 +48,3 @@ def solve_part2(fileInfo):
             last = number
 
     return counter
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

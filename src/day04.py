@@ -135,7 +135,3 @@ def solve_part2(fileInfo):
     results = findLastBoard(converted)
     theResult = calculateSum(results[0], results[1])
     return theResult
-
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")

@@ -141,6 +141,3 @@ def solve_part2(fileInfo):
     res = max - min
 
     return res
-
-print(f"Part 1: {solve_part1(file)}")
-print(f"Part 2: {solve_part2(file)}")
