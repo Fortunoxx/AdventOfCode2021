@@ -1,3 +1,5 @@
+name: Python Check License
+
 on:
   push:
     branches:
