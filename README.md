@@ -1,4 +1,5 @@
 [![Build Status](https://github.com/Fortunoxx/AdventOfCode2021/actions/workflows/python-package.yml/badge.svg)](https://github.com/Fortunoxx/AdventOfCode2021/actions)
+[![codecov](https://codecov.io/gh/Fortunoxx/AdventOfCode2021/branch/main/graph/badge.svg)](https://codecov.io/gh/Fortunoxx/AdventOfCode2021)
 
 # AdventOfCode2021
 Get started at https://adventofcode.com/2021
