@@ -43,18 +43,6 @@ def findLowPoints(arrays):
     return results
 
 
-def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
-    color = 'aquamarine'
-    if UseAlternateColor == True:
-        color = 'sienna'
-
-    pen.penup()
-    offset = offsetBase * factor
-    pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor - offset)
-    pen.color(color)
-    pen.dot()
-
-
 def addNeighbours(coordinates, values, processed, results, maxX = 9, maxY = 4):
     x = coordinates[0]
     y = coordinates[1]
@@ -173,6 +161,18 @@ def solve_part2(fileInfo):
     for item in top:
         result1 *= item
     return result1
+
+
+# def printDot(coordinates, UseAlternateColor = False, factor = 6, offsetBase = 80):
+#     color = 'aquamarine'
+#     if UseAlternateColor == True:
+#         color = 'sienna'
+
+#     pen.penup()
+#     offset = offsetBase * factor
+#     pen.goto(coordinates[0] * factor - offset, coordinates[1] * factor - offset)
+#     pen.color(color)
+#     pen.dot()
 
 
 # window_ = turtle.Screen()
