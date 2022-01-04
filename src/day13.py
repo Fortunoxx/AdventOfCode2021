@@ -1,13 +1,5 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "13"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
 # import turtle
 # from turtle import *
-import puzzle
-puzzle.FetchForDay(day)
 
 
 def convert(fileInfo):

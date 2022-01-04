@@ -1,13 +1,4 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "15"
-# file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-file = {"key": "input", "file": f"test/data/day{day}.sample.dat"}
-
 import numpy as np
-import puzzle
-puzzle.FetchForDay(day)
 
 
 def dijkstra(nodes, distances):

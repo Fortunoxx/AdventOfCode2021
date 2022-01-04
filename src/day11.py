@@ -1,12 +1,4 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "11"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
 import numpy as np
-import puzzle
-puzzle.FetchForDay(day)
 
 
 def increaseAdjacent(coordinates, array, maxX, maxY):

@@ -10,7 +10,8 @@ def FetchForDay(day):
             if not os.path.exists(filename):
                 with open(filename, 'x') as inputFile:
                     inputFile.write(result.text)
-            return filename
+                return (filename, True)
+            return (filename, False)
 
 def FetchTextForDay(day):
     with open('src/puzzle/cookie.txt') as cookieFile:

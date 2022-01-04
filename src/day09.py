@@ -1,14 +1,5 @@
-import sys
 # import turtle
 # from turtle import *
-
-sys.path.append('src/puzzle')
-
-day = "09"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
-import puzzle
-puzzle.FetchForDay(day)
 
 
 def findNeighbours(arrays, x, y, maxX = 9, maxY = 4):

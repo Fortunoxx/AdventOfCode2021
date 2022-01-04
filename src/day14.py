@@ -1,13 +1,3 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "14"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
-import puzzle
-puzzle.FetchForDay(day)
-
-
 def splitIntoParts(polymer, size = 2):
     idx = 0
     parts = []

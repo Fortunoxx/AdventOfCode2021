@@ -1,13 +1,5 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "10"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-chars = { '(': ')', '<': '>', '[': ']', '{': '}' }
-
 import math
-import puzzle
-puzzle.FetchForDay(day)
+chars = { '(': ')', '<': '>', '[': ']', '{': '}' }
 
 
 def isOpeningChar(openingChar, charTable):

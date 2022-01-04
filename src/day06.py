@@ -1,13 +1,3 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "06"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
-import puzzle
-puzzle.FetchForDay(day)
-
-
 def reproduce(input, iterations=80, resetTimer=6, creationTimer=8):
     if(iterations > 0):
         newElements = 0

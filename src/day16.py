@@ -1,13 +1,3 @@
-import sys
-sys.path.append('src/puzzle')
-
-day = "16"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-
-import puzzle
-puzzle.FetchForDay(day)
-
-
 def convert(fileInfo):
     with open(fileInfo["file"]) as file:
         line = file.read()

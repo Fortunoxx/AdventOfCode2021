@@ -1,12 +1,3 @@
-import sys
-sys.path.append('src/puzzle')
-import puzzle
-
-day = "02"
-file = {"key": "input", "file": f"src/data/day{day}.input.dat"}
-puzzle.FetchForDay(day)
-
-
 def solve_part1(fileInfo):
     horiz = 0
     depth = 0
