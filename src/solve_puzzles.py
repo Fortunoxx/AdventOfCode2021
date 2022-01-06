@@ -44,7 +44,7 @@ for i in range(24):
         day = "0" + day
     print(f"{O}Day {day}: fetching puzzle data...")
     (fileName, skipped) = puzzle.FetchForDay(day)
-    print(f"{G}Day {day}: fetching complete: {fileName} (Skipped: {O}{skipped})")
+    print(f"{G}Day {day}: fetching complete: {fileName} (Skipped: {O}{skipped}{G})")
 
 print(f"{P}")
 print(f"--- Solving puzzles now ---")
