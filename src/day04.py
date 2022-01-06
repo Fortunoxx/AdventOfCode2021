@@ -1,10 +1,5 @@
 import numpy as np
 
-def getFieldFromLineNumber(lineNumber):
-    if lineNumber >= 2:
-        return (lineNumber - 2) % 5
-    return 0
-
 
 def convert2(fileInfo):
     with open(fileInfo["file"]) as file:
@@ -111,12 +106,9 @@ def findLastBoard(numbers, sets):
                 continue
             elif is_winner(b.flatten('F')) or is_winner(b.flatten()):
                 winning_order.append(idx)
-                # break
 
         if len(winning_order) == len(a): # we found the last winner
-            # return(n, b)
             return(n, a[winning_order[-1]])
-    return (None, None)
 
 
 def findMatches(numbers, arrayToCheck, amount=5):
@@ -163,6 +155,3 @@ def solve_part2(fileInfo):
     results = findLastBoard(converted[0], converted[1])
     theResult = calculateSum2(results[0], results[1])
     return theResult
-
-# solve_part2({"file": "test/data/day04.sample.dat"})
-# solve_part2({"file": "src/data/day04.input.dat"})
