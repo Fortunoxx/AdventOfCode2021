@@ -1,7 +1,30 @@
+import numpy as np
+
 def getFieldFromLineNumber(lineNumber):
     if lineNumber >= 2:
         return (lineNumber - 2) % 5
     return 0
+
+
+def convert2(fileInfo):
+    with open(fileInfo["file"]) as file:
+        arrays3d = []
+        arrays2d = []
+        numbers = []
+        isFirst = True
+        for line in file:
+            line = line.strip()
+            if isFirst:
+                numbers = [int(part) for part in line.split(",")]
+                isFirst = False
+            elif line == "":
+                if len(arrays2d) > 0:
+                    arrays3d.append(arrays2d)
+                arrays2d = []
+            elif line != "":
+                arrays2d.append([int(part) for part in line.replace("  ", " ").strip().split(" ")])
+        arrays3d.append(arrays2d) # add last set
+        return (numbers, arrays3d)
 
 
 def convert(fileInfo, blockSize=6):
@@ -59,32 +82,41 @@ def findWinningBoard(converted, amount=5):
     return (None, None)
 
 
-def findLastBoard(converted, amount=5):
-    drawnNumbers = []
-    winningOrder = []
+def is_winner(flattened, search=-1, size=5):
+    # take chunks of <size> and check if it matches the pattern
+    idx = 0
+    won = False
+    while idx < len(flattened):
+        part = flattened[idx:idx+size]
+        if len(np.where(part == search)[0]) == size:
+            won = True
+            break
+        idx += size
+    return won
+    
 
-    for number in converted["numbers"]:
-        drawnNumbers.append(number)
-        if(len(drawnNumbers) < amount):
-            continue
+def findLastBoard(numbers, sets):
+    drawn_numbers = []
+    winning_order = []
 
-        for item in converted["sets"]:
-            if item["id"] in winningOrder:
+    a = np.array(sets)
+    for n in numbers:
+        drawn_numbers.append(n)     # keep a list of drawn numbers - maybe we don't need that later
+        a = np.where(a == n, -1, a) # "remove" the drawn number
+
+        idx = -1
+        for b in a:
+            idx += 1
+            if idx in winning_order: 
                 continue
+            elif is_winner(b.flatten('F')) or is_winner(b.flatten()):
+                winning_order.append(idx)
+                # break
 
-            for row in item["rows"]:
-                if findMatches(drawnNumbers, row):
-                    winningOrder.append(item["id"])
-                    break
-            for col in item["columns"]:
-                if findMatches(drawnNumbers, col):
-                    winningOrder.append(item["id"])
-                    break
-
-            if (len(winningOrder) == len(converted["sets"])):
-                return (item, drawnNumbers)
-
-    return None
+        if len(winning_order) == len(a): # we found the last winner
+            # return(n, b)
+            return(n, a[winning_order[-1]])
+    return (None, None)
 
 
 def findMatches(numbers, arrayToCheck, amount=5):
@@ -99,9 +131,6 @@ def findMatches(numbers, arrayToCheck, amount=5):
 
 
 def calculateSum(item, numbers):
-    if item is None:
-        return -1
-
     leftOvers = []
     for row in item["rows"]:
         for r in row:
@@ -113,6 +142,15 @@ def calculateSum(item, numbers):
     return theSum * theLast
 
 
+def calculateSum2(item, set):
+    theSum = 0
+    for array in set:
+        for i in array:
+            if i >= 0:
+                theSum += i
+    return theSum * item
+
+
 def solve_part1(fileInfo):
     converted = convert(fileInfo)
     results = findWinningBoard(converted)
@@ -121,7 +159,10 @@ def solve_part1(fileInfo):
 
 
 def solve_part2(fileInfo):
-    converted = convert(fileInfo)
-    results = findLastBoard(converted)
-    theResult = calculateSum(results[0], results[1])
+    converted = convert2(fileInfo)
+    results = findLastBoard(converted[0], converted[1])
+    theResult = calculateSum2(results[0], results[1])
     return theResult
+
+# solve_part2({"file": "test/data/day04.sample.dat"})
+# solve_part2({"file": "src/data/day04.input.dat"})
